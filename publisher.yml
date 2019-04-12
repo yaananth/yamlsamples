@@ -1,0 +1,15 @@
+name: $(Rev:r)
+steps:
+- script: 'set'
+  displayName: 'Examine environment'
+- script: 'copy $(Build.SourcesDirectory)\publisher.yml $(Build.ArtifactStagingDirectory)\'
+  displayName: 'Copy file to artifacts staging directory'
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish build artifacts'
+
+
+
+
+
+
+

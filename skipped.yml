@@ -1,0 +1,20 @@
+
+jobs:
+- job: Foo
+
+  steps:
+  - script: echo Hello!
+    condition: always() # this step will always run, even if the pipeline is cancelled
+
+  - script: |
+      echo ##vso[task.logissue type=error;]error encountered
+      exit 1
+  - script: echo System.debug is true!!
+    condition: and(always(), eq(variables['System.debug'], 'true'))
+
+- job: Bar
+  dependsOn: Foo
+  condition: failed() # this job will only run if Foo fails
+
+  steps:
+  - script: I am runnings!

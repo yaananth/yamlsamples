@@ -1,0 +1,15 @@
+steps:
+- script: 'set'
+  displayName: 'Examine environment'
+
+- script: |
+    echo ##vso[task.logissue type=error;]error encountered
+    exit 1
+  displayName: 'Fail'
+
+
+
+
+
+
+

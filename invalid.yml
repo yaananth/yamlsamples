@@ -1,0 +1,12 @@
+name: $(Rev:r)
+<blargh>
+steps:
+- script: 'set'
+  displayName: 'Examine environment'
+
+
+
+
+
+
+

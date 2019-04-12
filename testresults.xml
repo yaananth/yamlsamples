@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites disabled="0"
+            errors="0"
+            failed="1"
+            name="tests"
+            time="30">
+    <testsuite name="product.tests"
+               tests="2"
+               disabled="0"
+               errors="0"
+               failures="1"
+               id="0"
+               time="30">
+        <testcase name="product.tests.test1"
+                  classname="product.tests.test1"
+                  time="15">
+            <failure message="unexpected value for property x"
+                     type="exception">
+            </failure>
+            <system-out>running test...</system-out>
+            <system-err>exception: unexpected value for property x</system-err>
+        </testcase>
+        <testcase name="product.tests.test2"
+                  classname="product.tests.test2"
+                  time="15">
+            <system-out>running test...</system-out>
+        </testcase>
+    </testsuite>
+</testsuites>

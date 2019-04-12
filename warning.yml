@@ -1,0 +1,18 @@
+# Generate a warning. The set calls are to provide extra lines in the log of the step.
+
+continueOnError: true
+steps:
+- script: 'set'
+  displayName: 'Examine environment'
+
+- script: |
+    set
+    set
+    set
+    set
+    echo ##vso[task.logissue type=warning;]warning warning warning
+    set
+    set
+    set
+  displayName: 'Warn'
+

@@ -1,0 +1,145 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+stages: 
+- stage: Build
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        Debug:
+          BUILD_DEBUG: true
+        Release:
+          BUILD_DEBUG: false
+    steps:
+    - script: set
+      displayName: 'Examine environment'
+
+    - script: |
+        echo building...
+      displayName: 'Run build command'
+
+    - script: echo running unit tests...
+      displayName: 'Run unit tests'
+
+- stage: Test
+  dependsOn: Build
+  jobs:
+  - job:
+    pool: default
+    strategy:
+      parallel: 5
+    steps:
+    - script: echo running integration tests...
+      displayName: 'Run integration tests'
+
+- stage: PreProduction
+  dependsOn: Test
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        PPE0:
+          DEPLOY_ENVIRONMENT: 'ppe0'
+        PPE1:
+          DEPLOY_ENVIRONMENT: 'ppe1'
+    steps:
+    - script: echo deploying to $(DEPLOY_ENVIRONMENT)...
+      displayName: 'Deploy to $(DEPLOY_ENVIRONMENT)'
+
+- stage: Ring0
+  dependsOn: Test
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        WCUS0:
+          DEPLOY_ENVIRONMENT: 'tfs-wcus-0'
+    steps:
+    - script: echo deploying to $(DEPLOY_ENVIRONMENT)...
+      displayName: 'Deploy to $(DEPLOY_ENVIRONMENT)'
+
+- stage: Ring1
+  dependsOn: Ring0
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        SBR1:
+          DEPLOY_ENVIRONMENT: 'tfs-sbr-1'
+        SU6:
+          DEPLOY_ENVIRONMENT: 'su6'
+    steps:
+    - script: echo deploying to $(DEPLOY_ENVIRONMENT)...
+      displayName: 'Deploy to $(DEPLOY_ENVIRONMENT)'
+
+- stage: Ring2
+  dependsOn: Ring1
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        CUS3:
+          DEPLOY_ENVIRONMENT: 'tfs-cus-3'
+        CCA1:
+          DEPLOY_ENVIRONMENT: 'tfs-cca-1'
+        WUS23:
+          DEPLOY_ENVIRONMENT: 'tfs-wus2-3'
+    steps:
+    - script: echo deploying to $(DEPLOY_ENVIRONMENT)...
+      displayName: 'Deploy to $(DEPLOY_ENVIRONMENT)'
+
+- stage: Ring3
+  dependsOn: Ring2
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        WEU3:
+          DEPLOY_ENVIRONMENT: 'tfs-weu-3'
+        CUS2:
+          DEPLOY_ENVIRONMENT: 'tfs-cus-2'
+    steps:
+    - script: echo deploying to $(DEPLOY_ENVIRONMENT)...
+      displayName: 'Deploy to $(DEPLOY_ENVIRONMENT)'
+
+- stage: Ring4
+  dependsOn: Ring3
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        EA1:
+          DEPLOY_ENVIRONMENT: 'tfs-ea-1'
+        SU7:
+          DEPLOY_ENVIRONMENT: 'su7'
+    steps:
+    - script: echo deploying to $(DEPLOY_ENVIRONMENT)...
+      displayName: 'Deploy to $(DEPLOY_ENVIRONMENT)'
+
+- stage: Ring5
+  dependsOn: Ring4
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        SU1:
+          DEPLOY_ENVIRONMENT: 'su1'
+        SU3:
+          DEPLOY_ENVIRONMENT: 'su3'
+        WEU2:
+          DEPLOY_ENVIRONMENT: 'tfs-weu-2'
+    steps:
+    - script: echo deploying to $(DEPLOY_ENVIRONMENT)...
+      displayName: 'Deploy to $(DEPLOY_ENVIRONMENT)'

@@ -1,0 +1,8 @@
+name: Jobberwocky.$(Build.SourceBranchName).$(Date:yyyyMMdd)$(Rev:.r)
+jobs:
+- job: jobberwocky
+  displayName: 'Job Job Job Job Job'
+  steps:
+  - script: 'set'
+    displayName: 'Examine environment'
+

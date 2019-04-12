@@ -1,0 +1,67 @@
+# Different job naming cases
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+stages: 
+- stage: SimpleJob
+  jobs:
+  - job: UserJobName
+    pool: default
+    steps:
+    - script: set
+      displayName: 'Examine environment'
+
+- stage: SimpleJobNoName
+  jobs:
+  - job: 
+    pool: default
+    steps:
+    - script: set
+      displayName: 'Examine environment'
+
+- stage: MatrixJob
+  jobs:
+  - job: UserJobName
+    pool: default
+    strategy:
+      matrix:
+        MatrixOptionOne:
+          MATRIX: 'one'
+        MatrixOptionTwo:
+          MATRIX: 'two'
+    steps:
+    - script: set
+      displayName: 'Examine environment'
+
+- stage: MatrixJobNoName
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      matrix:
+        MatrixOptionOne:
+          MATRIX: 'one'
+        MatrixOptionTwo:
+          MATRIX: 'two'
+    steps:
+    - script: set
+      displayName: 'Examine environment'
+
+- stage: ParallelJob
+  jobs:
+  - job: UserJobName
+    pool: default
+    strategy:
+      parallel: 5
+    steps:
+    - script: set
+      displayName: 'Examine environment'
+
+- stage: ParallelJobNoName
+  jobs:
+  - job: 
+    pool: default
+    strategy:
+      parallel: 5
+    steps:
+    - script: set
+      displayName: 'Examine environment'

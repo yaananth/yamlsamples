@@ -1,0 +1,12 @@
+name: $(Rev:r)
+steps:
+- script: set
+  displayName: 'Examine environment'
+- script: |
+    echo ##vso[task.uploadsummary]$(Build.SourcesDirectory)\summary.md
+- script: |
+    echo ##vso[task.uploadsummary]$(Build.SourcesDirectory)\addendum.md
+
+
+
+

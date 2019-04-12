@@ -1,0 +1,54 @@
+# Test pipeline for errors and warnings
+
+name: $(Rev:r)
+stages: 
+- stage: uno
+  jobs:
+  - job: un  
+    pool: default
+    steps:
+    - script: |
+        echo ##vso[task.logissue type=warning;]duck...
+      displayName: 'duck'
+  - job: un_delay
+    pool: server
+    steps:
+    - task: Delay@1
+      displayName: 'wait a moment'
+      inputs:
+        delayForMinutes: 1
+
+- stage: dos
+  dependsOn: uno
+  jobs:
+  - job: deux
+    pool: default
+    steps:
+    - script: |
+        echo ##vso[task.logissue type=warning;]duck...
+      displayName: 'duck'
+  - job: deux_delay
+    pool: server
+    steps:
+    - task: Delay@1
+      displayName: 'wait a moment'
+      inputs:
+        delayForMinutes: 1
+
+- stage: tres
+  dependsOn: dos
+  jobs:
+  - job: trois 
+    pool: default
+    steps:
+    - script: |
+        echo ##vso[task.logissue type=error;]goose!
+        exit 1
+      displayName: 'goose'
+  - job: trois_delay
+    pool: server
+    steps:
+    - task: Delay@1
+      displayName: 'wait a moment'
+      inputs:
+        delayForMinutes: 1

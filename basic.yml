@@ -1,0 +1,10 @@
+steps:
+- script: 'set'
+  displayName: 'Examine environment'
+
+
+
+
+
+
+

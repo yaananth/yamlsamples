@@ -1,0 +1,15 @@
+# Test pipeline for trying to inject script
+
+name: <script type="text/javascript">alert("mwahahaha!!!")</script>$(Rev:r)
+stages: 
+- stage: my_stage
+  displayName: '<script type="text/javascript">alert("mwahahaha!!!")</script>'
+  jobs:
+  - job: my_job  
+    displayName: '<script type="text/javascript">alert("mwahahaha!!!")</script>'
+    pool: default
+    steps:
+    - script: |
+        echo ^<script type="text/javascript"^>alert("mwahahaha!!!")^</script^>
+        echo ##vso[task.logissue type=warning;]^<script type="text/javascript"^>alert("mwahahaha!!!")^</script^>
+      displayName: '<script type="text/javascript">alert("mwahahaha!!!")</script>'

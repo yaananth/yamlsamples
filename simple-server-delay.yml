@@ -1,0 +1,14 @@
+name: $(Rev:r)
+pool: server
+steps:
+- task: Delay@1
+  displayName: 'Delay by 5 minutes'
+  inputs:
+    delayForMinutes: 5
+
+
+
+
+
+
+

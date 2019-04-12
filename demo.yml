@@ -1,0 +1,20 @@
+trigger:
+- master
+
+stages:
+- stage: Build
+  jobs:
+  - job: Build
+    pool: 'Default'
+    steps:
+    - script: echo 'Build'
+
+- stage: Deploy
+  dependsOn: Build
+  jobs:
+  - deployment: Deploy
+    environment: Contoso
+    strategy:
+      runOnce:
+        steps:
+        - script: echo 'Deploy'

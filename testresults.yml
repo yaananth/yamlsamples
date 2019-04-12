@@ -1,0 +1,19 @@
+name: $(Rev:r)
+steps:
+- script: set
+  displayName: 'Examine environment'
+- script: echo building...
+  displayName: 'Compile'
+- script: echo running tests...
+  displayName: 'Run unit tests'
+- task: PublishTestResults@2
+  displayName: 'Publish test results'
+  inputs:
+    testResultsFiles: testresults.xml
+    searchFolder: '$(Build.SourcesDirectory)'
+    failTaskOnFailedTests: true
+
+
+
+
+

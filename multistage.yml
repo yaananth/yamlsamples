@@ -1,0 +1,43 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+name: $(Rev:r)
+stages: 
+- stage: dev
+  jobs:
+  - job: build  
+    pool: default
+    steps:
+    - script: set
+      displayName: 'Examine environment'
+
+    - script: |
+        echo building...
+      displayName: 'Run build command'
+
+  - job: unit_test
+    dependsOn: build
+    pool: default
+    steps:
+    - script: echo testing...
+      displayName: 'Run tests'
+
+- stage: test
+  dependsOn: dev
+  jobs:
+  - job: end_to_end_test 
+    pool: default
+    steps:
+    - script: echo testing...
+      displayName: 'Run tests'
+
+- stage: deploy
+  dependsOn: test
+  jobs:
+  - job: deployment 
+    pool: default
+    steps:
+    - script: echo deploying...
+      displayName: 'Deploy to production'

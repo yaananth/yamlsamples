@@ -1,0 +1,23 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+name: $(Rev:r)
+stages: 
+- stage: dev
+  jobs:
+  - job: delay
+    pool: server
+    steps:
+    - task: Delay@1
+      displayName: 'Delay by 5 minutes'
+      inputs:
+        delayForMinutes: 5
+
+  - job: change
+    dependsOn: delay
+    pool: default
+    steps:
+    - script: 'echo ##vso[build.updatebuildnumber]new-build-number'
+      displayName: 'Update build number'

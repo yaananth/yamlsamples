@@ -1,0 +1,50 @@
+# Fan-out, fan-in 
+# Feature flags for checkpoints/environments UI to work - 
+#  exec prc_SetRegistryValue 1, '#\FeatureAvailability\Entries\PipelineChecks.DisableApprovalsUI\AvailabilityState\', '0' 
+#  exec prc_SetRegistryValue 1, '#\FeatureAvailability\Entries\DistributedTask.ResourceApprovals\AvailabilityState\', '1' 
+stages:
+- stage: build_test
+  jobs:
+  - job: build_test
+    pool: default
+    steps:
+    - script: echo Build!
+
+- stage: deploy_east_with_deployment
+  dependsOn: build_test
+  jobs:
+  - deployment: deploy_to_east_deployment
+    pool: default
+    environment: test
+    strategy:                  # runOnce/blue green/rolling/canary, with lifecycle hooks viz, pre/post healthcheck, swap etc
+      runOnce:                 # default strategy
+        deploy:
+          steps:       
+          - script: echo deploy web pkg
+  - job: deploy_to_east
+    pool: default
+    steps:
+    - script: ping bing.com -n 500
+    - task: NuGetCommand@2 
+      displayName: 'NuGet restore' 
+      inputs: 
+          feedsToUse: config 
+          nugetConfigPath: stuff 
+          externalFeedCredentials: 'stuff' 
+- stage: deploy_west
+  dependsOn: build_test
+  jobs:
+  - job: deploy_to_west
+    pool: default
+    steps:
+    - script: echo Deploying West!
+    
+- stage: prod_verify
+  dependsOn:
+  - deploy_east_with_deployment
+  - deploy_west
+  jobs:
+  - job: verify
+    pool: default
+    steps:
+    - script: echo Verifying deploys!

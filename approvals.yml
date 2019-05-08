@@ -2,6 +2,7 @@
 # Feature flags for checkpoints/environments UI to work - 
 #  exec prc_SetRegistryValue 1, '#\FeatureAvailability\Entries\PipelineChecks.DisableApprovalsUI\AvailabilityState\', '0' 
 #  exec prc_SetRegistryValue 1, '#\FeatureAvailability\Entries\DistributedTask.ResourceApprovals\AvailabilityState\', '1' 
+#  Enable toggle "Approvals for multi-stage pipelines"
 stages:
 - stage: build_test
   jobs:

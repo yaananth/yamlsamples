@@ -40,7 +40,7 @@ stages:
       displayName: 'Long running'
 
 - stage: deploy
-  dependsOn: test
+  dependsOn: infinite
   jobs:
   - job: deployment 
     pool: default

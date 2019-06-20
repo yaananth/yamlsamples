@@ -8,7 +8,7 @@ stages:
 - stage: dev
   jobs:
   - job: build  
-    pool: default
+    #pool: default
     steps:
     - script: set
       displayName: 'Examine environment'

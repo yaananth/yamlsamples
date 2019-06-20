@@ -19,7 +19,7 @@ stages:
 
   - job: unit_test
     dependsOn: build
-    pool: default
+    #pool: default
     steps:
     - script: echo testing...
       displayName: 'Run tests'

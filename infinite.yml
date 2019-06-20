@@ -28,7 +28,7 @@ stages:
   dependsOn: dev
   jobs:
   - job: end_to_end_test 
-    pool: default
+    #pool: default
     steps:
     - script: |
         set i=1
@@ -43,7 +43,7 @@ stages:
   dependsOn: infinite
   jobs:
   - job: deployment 
-    pool: default
+    #pool: default
     steps:
     - script: echo deploying...
       displayName: 'Deploy to production'

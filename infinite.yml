@@ -29,6 +29,8 @@ stages:
   jobs:
   - job: end_to_end_test 
     #pool: default
+    pool:
+      vmimage: windows-2019
     steps:
     - script: |
         set i=1

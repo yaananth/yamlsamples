@@ -12,6 +12,9 @@ steps:
     testResultsFiles: testresults.xml
     searchFolder: '$(Build.SourcesDirectory)'
     failTaskOnFailedTests: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.SourcesDirectory)'  
 
 
 

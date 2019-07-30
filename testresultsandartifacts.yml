@@ -6,15 +6,15 @@ steps:
   displayName: 'Compile'
 - script: echo running tests...
   displayName: 'Run unit tests'
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathtoPublish: '$(Build.SourcesDirectory)'    
 - task: PublishTestResults@2
   displayName: 'Publish test results'
   inputs:
     testResultsFiles: testresults.xml
     searchFolder: '$(Build.SourcesDirectory)'
     failTaskOnFailedTests: true
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(Build.SourcesDirectory)'  
 
 
 

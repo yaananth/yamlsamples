@@ -3,6 +3,7 @@ stages:
 - stage: dev
   jobs:
     - job: build
+      continueOnError: true
       #pool: default
       strategy:
         matrix:

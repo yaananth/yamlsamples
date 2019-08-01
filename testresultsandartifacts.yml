@@ -1,21 +1,60 @@
 name: $(Rev:r)
-steps:
-- script: set
-  displayName: 'Examine environment'
-- script: echo building...
-  displayName: 'Compile'
-- script: echo running tests...
-  displayName: 'Run unit tests'
-- task: PublishBuildArtifacts@1
-  inputs:
-    pathtoPublish: '$(Build.SourcesDirectory)'    
-- task: PublishTestResults@2
-  displayName: 'Publish test results'
-  inputs:
-    testResultsFiles: testresults.xml
-    searchFolder: '$(Build.SourcesDirectory)'
-    failTaskOnFailedTests: true
+stages: 
+- stage: dev
+  jobs:
+    - job: build
+      #pool: default
+      strategy:
+        matrix:
+          Debug:
+            BUILD_DEBUG: true
+          Release:
+            BUILD_DEBUG: false 
+      steps:
+      - script: set
+        displayName: 'Examine environment'
+      - script: echo building...
+        displayName: 'Compile'
+      - script: echo running tests...
+        displayName: 'Run unit tests'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: '$(Build.SourcesDirectory)'  
+        
+      - task: PublishTestResults@2
+        displayName: 'Publish test results'
+        inputs:
+          testResultsFiles: testresults.xml
+          searchFolder: '$(Build.SourcesDirectory)'
+          failTaskOnFailedTests: true
 
+- stage: dev2
+  jobs:
+    - job: build
+      #pool: default
+      strategy:
+        matrix:
+          Debug:
+            BUILD_DEBUG: true
+          Release:
+            BUILD_DEBUG: false 
+      steps:
+      - script: set
+        displayName: 'Examine environment'
+      - script: echo building...
+        displayName: 'Compile'
+      - script: echo running tests...
+        displayName: 'Run unit tests'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: '$(Build.SourcesDirectory)'  
+        
+      - task: PublishTestResults@2
+        displayName: 'Publish test results'
+        inputs:
+          testResultsFiles: testresults.xml
+          searchFolder: '$(Build.SourcesDirectory)'
+          failTaskOnFailedTests: true
 
 
 
